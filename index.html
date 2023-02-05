@@ -976,6 +976,8 @@
             countVac--;
             if (this.classList.contains("weekend")) {
               this.style.color = "black";
+            } else if (this.classList.contains("holiday")) {
+              document.querySelector(".tooltip").style.display = "none";
             }
           }
           document.querySelector("#countOOO").textContent = countOOO;
