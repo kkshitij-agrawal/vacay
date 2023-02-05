@@ -1,17 +1,68 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Page Title</title>
-  </head>
-  <body>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Plan your vacation 2023</title>
+    <link href="https://fonts.cdnfonts.com/css/product-sans" rel="stylesheet" />
+
     <style>
+      @import url("https://fonts.cdnfonts.com/css/product-sans");
+
+      body {
+        font-family: "Product Sans", sans-serif;
+        margin: 0px;
+        width: 96%;
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+      }
+      .headerContainer {
+        /* background: linear-gradient(
+          rgba(255, 255, 255, 1),
+          rgba(255, 255, 255, 0)
+        ); */
+        background-color: rgba(255, 255, 255, 1);
+        position: fixed;
+        z-index: 12;
+        display: flex;
+        flex-direction: row;
+        /* margin-left: 5%;
+        margin-right: 5%; */
+        top: 0%;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .Footer {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 2%;
+        width: 100%;
+        justify-content: center;
+        color: #7a7a7a;
+        align-items: center;
+      }
+
       #counter {
-        background-color: aquamarine;
+        background-color: rgba(74, 185, 148, 0.822);
         padding: 1%;
+        color: white;
+        border-radius: 5px;
+        margin-left: 1%;
+      }
+
+      #counter:first-child {
+        background-color: rgba(232, 232, 232, 0.822);
+        color: black;
       }
 
       .calendar {
-        margin-top: 2%;
+        padding: 5%;
+        padding-top: 7%;
+        /* margin-top: 1%; */
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 20px;
@@ -63,18 +114,22 @@
         padding: 10px;
         cursor: pointer;
         position: relative;
+        z-index: 10;
       }
 
       .date.selected {
-        background-color: #3498db;
+        background-color: rgb(101, 199, 166);
         color: #fff;
+        z-index: 5;
+        font-weight: bolder;
       }
 
       /* Style for merged dates */
       .date.selected + .date.selected {
+        /* border: rgb(74, 185, 148) solid 4px; */
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
-        margin-left: -5px;
+        /* margin-left: -5px; */
       }
 
       .date.selected:last-child {
@@ -87,19 +142,34 @@
         border-bottom-left-radius: 5px;
       }
 
-      .date.selected:before {
+      .date.selected:first-child:before {
+        left: 0px;
+        width: 0px;
+      }
+
+      /* .date.selected:before {
         content: "";
         position: absolute;
-        top: 10px;
-        bottom: 10px;
+        top: 5px;
+        bottom: 5px;
         left: -5px;
         width: 5px;
-        background-color: #3498db;
+        background-color: rgb(101, 199, 166);
+      } */
+
+      .merged:before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        bottom: 5px;
+        left: -5px;
+        width: 5px;
+        background-color: rgb(101, 199, 166);
       }
 
       /* Style for public holidays */
       .date.holiday {
-        background-color: #e74c3c;
+        background-color: #ff6c5c;
         color: #fff;
       }
 
@@ -107,21 +177,81 @@
         opacity: 0.5;
       }
 
-      .date.weekdaycolor {
+      .date.weekend {
         background-color: hsl(57, 100%, 92%);
+
+        z-index: 1;
+        box-sizing: border-box;
       }
 
-      @media (max-width: 600px) {
+      .tooltip {
+        position: absolute;
+        z-index: 999;
+        display: none;
+        font-size: 0.7em;
+        padding: 10px;
+        background-color: #ff6c5c;
+        color: #fff;
+        border-radius: 5px;
+      }
+
+      .textButton {
+        background-color: rgba(232, 232, 232, 0.822);
+        color: rgb(53, 53, 53);
+        padding: 0.5%;
+
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .textButton:hover {
+        background-color: #3498db;
+        color: white;
+      }
+
+      @media (max-width: 608px) {
+        .headerContainer {
+          padding-top: 2%;
+          padding-bottom: 2%;
+          width: 96%;
+        }
+
+        .Footer {
+          width: 96%;
+        }
+
+        #counter {
+          padding: 2%;
+        }
+
         .calendar {
           grid-template-columns: repeat(1, 1fr);
-          grid-gap: 20px;
+          padding-top: 15%;
         }
       }
     </style>
+  </head>
+  <body>
+    <!-- 
+    Features
+    - Deploy website with a url
+    - [Done] Add bank holiday tooltip
+    - Add note of the location
+    - Create itinerary of the place
+    - Add live weather updates of that location in that period
+    - Ability to share with friends and edit (like google doc)
+    -->
 
-    <span id="counter">OOO Days: <span id="count">0</span></span>
+    <div class="headerContainer">
+      <!-- Calendar 2023 London -->
+      <span id="counter"> 💼 OOO Days: <span id="countOOO">0</span></span>
+      <span id="counter">🏖️ Vacation Days: <span id="countVac">0</span></span>
+    </div>
+
+    <div class="tooltip"></div>
 
     <div class="calendar">
+      <!-- January -->
       <div class="month">
         <div class="month-name">January</div>
         <div class="weekdays">
@@ -134,40 +264,48 @@
           <div class="weekday">Sat</div>
         </div>
         <div class="dates">
-          <div class="date weekdaycolor">1</div>
-          <div class="date holiday">2</div>
+          <div class="date weekend">1</div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="New year's day"
+          >
+            2
+          </div>
           <div class="date">3</div>
           <div class="date">4</div>
           <div class="date">5</div>
           <div class="date">6</div>
-          <div class="date weekdaycolor">7</div>
-          <div class="date weekdaycolor">8</div>
+          <div class="date weekend">7</div>
+          <div class="date weekend">8</div>
           <div class="date">9</div>
           <div class="date">10</div>
           <div class="date">11</div>
           <div class="date">12</div>
           <div class="date">13</div>
-          <div class="date weekdaycolor">14</div>
-          <div class="date weekdaycolor">15</div>
+          <div class="date weekend">14</div>
+          <div class="date weekend">15</div>
           <div class="date">16</div>
           <div class="date">17</div>
           <div class="date">18</div>
           <div class="date">19</div>
           <div class="date">20</div>
-          <div class="date weekdaycolor">21</div>
-          <div class="date weekdaycolor">22</div>
+          <div class="date weekend">21</div>
+          <div class="date weekend">22</div>
           <div class="date">23</div>
           <div class="date">24</div>
           <div class="date">25</div>
           <div class="date">26</div>
           <div class="date">27</div>
-          <div class="date weekdaycolor">28</div>
-          <div class="date weekdaycolor">29</div>
+          <div class="date weekend">28</div>
+          <div class="date weekend">29</div>
           <div class="date">30</div>
           <div class="date">31</div>
         </div>
       </div>
 
+      <!-- February -->
       <div class="month">
         <div class="month-name">February</div>
         <div class="weekdays">
@@ -186,34 +324,35 @@
           <div class="date">1</div>
           <div class="date">2</div>
           <div class="date">3</div>
-          <div class="date">4</div>
-          <div class="date">5</div>
+          <div class="date weekend">4</div>
+          <div class="date weekend">5</div>
           <div class="date">6</div>
           <div class="date">7</div>
           <div class="date">8</div>
           <div class="date">9</div>
           <div class="date">10</div>
-          <div class="date">11</div>
-          <div class="date">12</div>
+          <div class="date weekend">11</div>
+          <div class="date weekend">12</div>
           <div class="date">13</div>
           <div class="date">14</div>
           <div class="date">15</div>
           <div class="date">16</div>
           <div class="date">17</div>
-          <div class="date">18</div>
-          <div class="date">19</div>
+          <div class="date weekend">18</div>
+          <div class="date weekend">19</div>
           <div class="date">20</div>
           <div class="date">21</div>
           <div class="date">22</div>
           <div class="date">23</div>
           <div class="date">24</div>
-          <div class="date">25</div>
-          <div class="date">26</div>
+          <div class="date weekend">25</div>
+          <div class="date weekend">26</div>
           <div class="date">27</div>
           <div class="date">28</div>
         </div>
       </div>
 
+      <!-- March -->
       <div class="month">
         <div class="month-name">March</div>
         <div class="weekdays">
@@ -232,29 +371,29 @@
           <div class="date">1</div>
           <div class="date">2</div>
           <div class="date">3</div>
-          <div class="date">4</div>
-          <div class="date">5</div>
+          <div class="date weekend">4</div>
+          <div class="date weekend">5</div>
           <div class="date">6</div>
           <div class="date">7</div>
           <div class="date">8</div>
           <div class="date">9</div>
           <div class="date">10</div>
-          <div class="date">11</div>
-          <div class="date">12</div>
+          <div class="date weekend">11</div>
+          <div class="date weekend">12</div>
           <div class="date">13</div>
           <div class="date">14</div>
           <div class="date">15</div>
           <div class="date">16</div>
           <div class="date">17</div>
-          <div class="date">18</div>
-          <div class="date">19</div>
+          <div class="date weekend">18</div>
+          <div class="date weekend">19</div>
           <div class="date">20</div>
           <div class="date">21</div>
           <div class="date">22</div>
           <div class="date">23</div>
           <div class="date">24</div>
-          <div class="date">25</div>
-          <div class="date">26</div>
+          <div class="date weekend">25</div>
+          <div class="date weekend">26</div>
           <div class="date">27</div>
           <div class="date">28</div>
           <div class="date">29</div>
@@ -263,6 +402,7 @@
         </div>
       </div>
 
+      <!-- April -->
       <div class="month">
         <div class="month-name">April</div>
         <div class="weekdays">
@@ -281,39 +421,61 @@
           <div class="date empty"></div>
           <div class="date empty"></div>
           <div class="date empty"></div>
-          <div class="date">1</div>
-          <div class="date">2</div>
+          <div class="date weekend">1</div>
+          <div class="date weekend">2</div>
           <div class="date">3</div>
           <div class="date">4</div>
           <div class="date">5</div>
           <div class="date">6</div>
-          <div class="date">7</div>
-          <div class="date">8</div>
-          <div class="date">9</div>
-          <div class="date">10</div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="Good Friday"
+          >
+            7
+          </div>
+          <div class="date weekend">8</div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="Easter Sunday"
+          >
+            9
+          </div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="Easter Monday"
+          >
+            10
+          </div>
           <div class="date">11</div>
           <div class="date">12</div>
           <div class="date">13</div>
           <div class="date">14</div>
-          <div class="date">15</div>
-          <div class="date">16</div>
+          <div class="date weekend">15</div>
+          <div class="date weekend">16</div>
           <div class="date">17</div>
           <div class="date">18</div>
           <div class="date">19</div>
           <div class="date">20</div>
           <div class="date">21</div>
-          <div class="date">22</div>
-          <div class="date">23</div>
+          <div class="date weekend">22</div>
+          <div class="date weekend">23</div>
           <div class="date">24</div>
           <div class="date">25</div>
           <div class="date">26</div>
           <div class="date">27</div>
           <div class="date">28</div>
-          <div class="date">29</div>
-          <div class="date">30</div>
+          <div class="date weekend">29</div>
+          <div class="date weekend">30</div>
         </div>
       </div>
 
+      <!-- May -->
       <div class="month">
         <div class="month-name">May</div>
         <div class="weekdays">
@@ -327,39 +489,68 @@
         </div>
         <div class="dates">
           <div class="date empty"></div>
-          <div class="date">1</div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="May Bank Holiday"
+          >
+            1
+          </div>
           <div class="date">2</div>
           <div class="date">3</div>
           <div class="date">4</div>
           <div class="date">5</div>
-          <div class="date">6</div>
-          <div class="date">7</div>
-          <div class="date">8</div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="King Charles' Coronation"
+          >
+            6
+          </div>
+          <div class="date weekend">7</div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="King Charles' Coronation"
+          >
+            8
+          </div>
           <div class="date">9</div>
           <div class="date">10</div>
           <div class="date">11</div>
           <div class="date">12</div>
-          <div class="date">13</div>
-          <div class="date">14</div>
+          <div class="date weekend">13</div>
+          <div class="date weekend">14</div>
           <div class="date">15</div>
           <div class="date">16</div>
           <div class="date">17</div>
           <div class="date">18</div>
           <div class="date">19</div>
-          <div class="date">20</div>
-          <div class="date">21</div>
+          <div class="date weekend">20</div>
+          <div class="date weekend">21</div>
           <div class="date">22</div>
           <div class="date">23</div>
           <div class="date">24</div>
           <div class="date">25</div>
           <div class="date">26</div>
-          <div class="date">27</div>
-          <div class="date">28</div>
-          <div class="date">29</div>
+          <div class="date weekend">27</div>
+          <div class="date weekend">28</div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="Spring Bank Holiday"
+          >
+            29
+          </div>
           <div class="date">30</div>
         </div>
       </div>
 
+      <!-- June -->
       <div class="month">
         <div class="month-name">June</div>
         <div class="weekdays">
@@ -378,38 +569,39 @@
           <div class="date empty"></div>
           <div class="date">1</div>
           <div class="date">2</div>
-          <div class="date">3</div>
-          <div class="date">4</div>
+          <div class="date weekend">3</div>
+          <div class="date weekend">4</div>
           <div class="date">5</div>
           <div class="date">6</div>
           <div class="date">7</div>
           <div class="date">8</div>
           <div class="date">9</div>
-          <div class="date">10</div>
-          <div class="date">11</div>
+          <div class="date weekend">10</div>
+          <div class="date weekend">11</div>
           <div class="date">12</div>
           <div class="date">13</div>
           <div class="date">14</div>
           <div class="date">15</div>
           <div class="date">16</div>
-          <div class="date">17</div>
-          <div class="date">18</div>
+          <div class="date weekend">17</div>
+          <div class="date weekend">18</div>
           <div class="date">19</div>
           <div class="date">20</div>
           <div class="date">21</div>
           <div class="date">22</div>
           <div class="date">23</div>
-          <div class="date">24</div>
-          <div class="date">25</div>
+          <div class="date weekend">24</div>
+          <div class="date weekend">25</div>
           <div class="date">26</div>
           <div class="date">27</div>
           <div class="date">28</div>
           <div class="date">29</div>
           <div class="date">30</div>
-          <div class="date">31</div>
+          <div class="date weekend">31</div>
         </div>
       </div>
 
+      <!-- July -->
       <div class="month">
         <div class="month-name">July</div>
         <div class="weekdays">
@@ -428,40 +620,41 @@
           <div class="date empty"></div>
           <div class="date empty"></div>
           <div class="date empty"></div>
-          <div class="date">1</div>
-          <div class="date">2</div>
+          <div class="date weekend">1</div>
+          <div class="date weekend">2</div>
           <div class="date">3</div>
           <div class="date">4</div>
           <div class="date">5</div>
           <div class="date">6</div>
           <div class="date">7</div>
-          <div class="date">8</div>
-          <div class="date">9</div>
+          <div class="date weekend">8</div>
+          <div class="date weekend">9</div>
           <div class="date">10</div>
           <div class="date">11</div>
           <div class="date">12</div>
           <div class="date">13</div>
           <div class="date">14</div>
-          <div class="date">15</div>
-          <div class="date">16</div>
+          <div class="date weekend">15</div>
+          <div class="date weekend">16</div>
           <div class="date">17</div>
           <div class="date">18</div>
           <div class="date">19</div>
           <div class="date">20</div>
           <div class="date">21</div>
-          <div class="date">22</div>
-          <div class="date">23</div>
+          <div class="date weekend">22</div>
+          <div class="date weekend">23</div>
           <div class="date">24</div>
           <div class="date">25</div>
           <div class="date">26</div>
           <div class="date">27</div>
           <div class="date">28</div>
-          <div class="date">29</div>
-          <div class="date">30</div>
+          <div class="date weekend">29</div>
+          <div class="date weekend">30</div>
           <div class="date">31</div>
         </div>
       </div>
 
+      <!-- August -->
       <div class="month">
         <div class="month-name">August</div>
         <div class="weekdays">
@@ -480,36 +673,44 @@
           <div class="date">2</div>
           <div class="date">3</div>
           <div class="date">4</div>
-          <div class="date">5</div>
-          <div class="date">6</div>
+          <div class="date weekend">5</div>
+          <div class="date weekend">6</div>
           <div class="date">7</div>
           <div class="date">8</div>
           <div class="date">9</div>
           <div class="date">10</div>
           <div class="date">11</div>
-          <div class="date">12</div>
-          <div class="date">13</div>
+          <div class="date weekend">12</div>
+          <div class="date weekend">13</div>
           <div class="date">14</div>
           <div class="date">15</div>
           <div class="date">16</div>
           <div class="date">17</div>
           <div class="date">18</div>
-          <div class="date">19</div>
-          <div class="date">20</div>
+          <div class="date weekend">19</div>
+          <div class="date weekend">20</div>
           <div class="date">21</div>
           <div class="date">22</div>
           <div class="date">23</div>
           <div class="date">24</div>
           <div class="date">25</div>
-          <div class="date">26</div>
-          <div class="date">27</div>
-          <div class="date">28</div>
+          <div class="date weekend">26</div>
+          <div class="date weekend">27</div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="Summer Bank Holiday"
+          >
+            28
+          </div>
           <div class="date">29</div>
           <div class="date">30</div>
           <div class="date">31</div>
         </div>
       </div>
 
+      <!-- September -->
       <div class="month">
         <div class="month-name">September</div>
         <div class="weekdays">
@@ -528,38 +729,39 @@
           <div class="date empty"></div>
           <div class="date empty"></div>
           <div class="date">1</div>
-          <div class="date">2</div>
-          <div class="date">3</div>
+          <div class="date weekend">2</div>
+          <div class="date weekend">3</div>
           <div class="date">4</div>
           <div class="date">5</div>
           <div class="date">6</div>
           <div class="date">7</div>
           <div class="date">8</div>
-          <div class="date">9</div>
-          <div class="date">10</div>
+          <div class="date weekend">9</div>
+          <div class="date weekend">10</div>
           <div class="date">11</div>
           <div class="date">12</div>
           <div class="date">13</div>
           <div class="date">14</div>
           <div class="date">15</div>
-          <div class="date">16</div>
-          <div class="date">17</div>
+          <div class="date weekend">16</div>
+          <div class="date weekend">17</div>
           <div class="date">18</div>
           <div class="date">19</div>
           <div class="date">20</div>
           <div class="date">21</div>
           <div class="date">22</div>
-          <div class="date">23</div>
-          <div class="date">24</div>
+          <div class="date weekend">23</div>
+          <div class="date weekend">24</div>
           <div class="date">25</div>
           <div class="date">26</div>
           <div class="date">27</div>
           <div class="date">28</div>
           <div class="date">29</div>
-          <div class="date">30</div>
+          <div class="date weekend">30</div>
         </div>
       </div>
 
+      <!-- October -->
       <div class="month">
         <div class="month-name">October</div>
         <div class="weekdays">
@@ -572,40 +774,41 @@
           <div class="weekday">Sat</div>
         </div>
         <div class="dates">
-          <div class="date">1</div>
+          <div class="date weekend">1</div>
           <div class="date">2</div>
           <div class="date">3</div>
           <div class="date">4</div>
           <div class="date">5</div>
           <div class="date">6</div>
-          <div class="date">7</div>
-          <div class="date">8</div>
+          <div class="date weekend">7</div>
+          <div class="date weekend">8</div>
           <div class="date">9</div>
           <div class="date">10</div>
           <div class="date">11</div>
           <div class="date">12</div>
           <div class="date">13</div>
-          <div class="date">14</div>
-          <div class="date">15</div>
+          <div class="date weekend">14</div>
+          <div class="date weekend">15</div>
           <div class="date">16</div>
           <div class="date">17</div>
           <div class="date">18</div>
           <div class="date">19</div>
           <div class="date">20</div>
-          <div class="date">21</div>
-          <div class="date">22</div>
+          <div class="date weekend">21</div>
+          <div class="date weekend">22</div>
           <div class="date">23</div>
           <div class="date">24</div>
           <div class="date">25</div>
           <div class="date">26</div>
           <div class="date">27</div>
-          <div class="date">28</div>
-          <div class="date">29</div>
+          <div class="date weekend">28</div>
+          <div class="date weekend">29</div>
           <div class="date">30</div>
           <div class="date">31</div>
         </div>
       </div>
 
+      <!-- November -->
       <div class="month">
         <div class="month-name">November</div>
         <div class="weekdays">
@@ -624,29 +827,29 @@
           <div class="date">1</div>
           <div class="date">2</div>
           <div class="date">3</div>
-          <div class="date">4</div>
-          <div class="date">5</div>
+          <div class="date weekend">4</div>
+          <div class="date weekend">5</div>
           <div class="date">6</div>
           <div class="date">7</div>
           <div class="date">8</div>
           <div class="date">9</div>
           <div class="date">10</div>
-          <div class="date">11</div>
-          <div class="date">12</div>
+          <div class="date weekend">11</div>
+          <div class="date weekend">12</div>
           <div class="date">13</div>
           <div class="date">14</div>
           <div class="date">15</div>
           <div class="date">16</div>
           <div class="date">17</div>
-          <div class="date">18</div>
-          <div class="date">19</div>
+          <div class="date weekend">18</div>
+          <div class="date weekend">19</div>
           <div class="date">20</div>
           <div class="date">21</div>
           <div class="date">22</div>
           <div class="date">23</div>
           <div class="date">24</div>
-          <div class="date">25</div>
-          <div class="date">26</div>
+          <div class="date weekend">25</div>
+          <div class="date weekend">26</div>
           <div class="date">27</div>
           <div class="date">28</div>
           <div class="date">29</div>
@@ -654,6 +857,7 @@
         </div>
       </div>
 
+      <!-- December -->
       <div class="month">
         <div class="month-name">December</div>
         <div class="weekdays">
@@ -672,43 +876,67 @@
           <div class="date empty"></div>
           <div class="date empty"></div>
           <div class="date">1</div>
-          <div class="date">2</div>
-          <div class="date">3</div>
+          <div class="date weekend">2</div>
+          <div class="date weekend">3</div>
           <div class="date">4</div>
           <div class="date">5</div>
           <div class="date">6</div>
           <div class="date">7</div>
           <div class="date">8</div>
-          <div class="date">9</div>
-          <div class="date">10</div>
+          <div class="date weekend">9</div>
+          <div class="date weekend">10</div>
           <div class="date">11</div>
           <div class="date">12</div>
           <div class="date">13</div>
           <div class="date">14</div>
           <div class="date">15</div>
-          <div class="date">16</div>
-          <div class="date">17</div>
+          <div class="date weekend">16</div>
+          <div class="date weekend">17</div>
           <div class="date">18</div>
           <div class="date">19</div>
           <div class="date">20</div>
           <div class="date">21</div>
           <div class="date">22</div>
-          <div class="date">23</div>
-          <div class="date">24</div>
-          <div class="date">25</div>
-          <div class="date">26</div>
+          <div class="date weekend">23</div>
+          <div class="date weekend">24</div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="Christmas Day"
+          >
+            25
+          </div>
+          <div
+            class="date holiday"
+            onmouseenter="showTooltip(this)"
+            onmouseleave="hideTooltip()"
+            data-text="Boxing Day"
+          >
+            26
+          </div>
           <div class="date">27</div>
           <div class="date">28</div>
           <div class="date">29</div>
-          <div class="date">30</div>
-          <div class="date">31</div>
+          <div class="date weekend">30</div>
+          <div class="date weekend">31</div>
         </div>
       </div>
+    </div>
+    <div class="Footer">
+      This website was created using AI and some parts of&nbsp;<a
+        href="https://twitter.com/imkshitij16"
+        class="textButton"
+        target="_blank"
+        >Kshitij Agrawal</a
+      >'s brain —&nbsp;
+      <a class="textButton" target="_blank">Read behind the scenes &#8599;</a>
     </div>
 
     <script>
       const dates = document.querySelectorAll(".date");
-      let count = 0;
+      let countOOO = 0;
+      let countVac = 0;
 
       dates.forEach((date) => {
         date.addEventListener("click", function () {
@@ -718,22 +946,64 @@
           const row = this.parentNode.children;
           let merged = false;
 
-          //   if (tableCells[i].classList.contains("selected")) {
-          //   count++;
-          //   console.log("hell");
-          // }
+          // change OOO counter
           if (
             this.classList.contains("selected") &&
-            !this.classList.contains("holiday")
+            !this.classList.contains("holiday") &&
+            !this.classList.contains("weekend")
           ) {
-            count++;
+            countOOO++;
           } else if (
             !this.classList.contains("selected") &&
-            !this.classList.contains("holiday")
+            !this.classList.contains("holiday") &&
+            !this.classList.contains("weekend")
           ) {
-            count--;
+            countOOO--;
           }
-          document.querySelector("#count").textContent = count;
+
+          // change Vac counter
+          if (this.classList.contains("selected")) {
+            countVac++;
+            if (this.classList.contains("weekend")) {
+              console.log(this);
+              this.style.color = "rgb(101, 199, 166);";
+              console.log(this);
+            }
+          } else {
+            countVac--;
+            if (this.classList.contains("weekend")) {
+              this.style.color = "black";
+            }
+          }
+          document.querySelector("#countOOO").textContent = countOOO;
+          document.querySelector("#countVac").textContent = countVac;
+
+          // change color of weekend day if selected
+          if (
+            this.classList.contains("selected") &&
+            this.classList.contains("weekend")
+          ) {
+            this.style.boxShadow = "inset 0px 0px 0px 5px rgb(101, 199, 166)";
+            this.style.color = "black ";
+          } else if (
+            !this.classList.contains("selected") &&
+            this.classList.contains("weekend")
+          ) {
+            this.style.boxShadow = "none";
+          }
+
+          // change color of weekend day if selected
+          if (
+            this.classList.contains("selected") &&
+            this.classList.contains("holiday")
+          ) {
+            this.style.boxShadow = "inset 0px 0px 0px 5px rgb(101, 199, 166)";
+          } else if (
+            !this.classList.contains("selected") &&
+            this.classList.contains("holiday")
+          ) {
+            this.style.boxShadow = "none";
+          }
 
           for (let i = 0; i < row.length; i++) {
             if (row[i] === this) {
@@ -758,18 +1028,25 @@
         });
       });
 
-      // let tableCells = document.querySelectorAll(
-      //   "td:not(.weekdaycolor):not(.empty):not(.holiday)"
-      // );
-      // console.log("hello");
-      // for (let i = 0; i < tableCells.length; i++) {
-      //   console.log("hell");
-      //   if (tableCells[i].classList.contains("selected")) {
-      //     count++;
-      //     console.log("hell");
-      //   }
-      // }
-      // document.querySelector("#count").textContent = count;
+      function showTooltip(el) {
+        var tooltip = document.querySelector(".tooltip");
+        var holidayText = el.getAttribute("data-text");
+        tooltip.innerHTML = "Bank holiday for " + "<b>" + holidayText + "</b>";
+        tooltip.style.display = "block";
+
+        if (window.innerWidth > 600) {
+          tooltip.style.top = el.offsetTop + el.offsetHeight + 2 + "px";
+          tooltip.style.left = el.offsetLeft + -50 + "px";
+        } else {
+          tooltip.style.top = el.offsetTop + el.offsetHeight + 2 + "px";
+          tooltip.style.left = "20%";
+        }
+      }
+
+      function hideTooltip() {
+        var tooltip = document.querySelector(".tooltip");
+        tooltip.style.display = "none";
+      }
     </script>
   </body>
 </html>
