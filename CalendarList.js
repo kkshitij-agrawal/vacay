@@ -1,0 +1,108 @@
+const months = [
+  //London 2023
+  [
+    ["January", [1, 2], ["New Year's day", "New Year's day"]],
+    ["February", [], []],
+    ["March", [], []],
+    ["April", [7, 9, 10], ["Good Friday", "Easter Sunday", "Easter Monday"]],
+    [
+      "May",
+      [1, 6, 8, 29],
+      [
+        "May Bank Holiday",
+        "King Charles' Coronation",
+        "King Charles' Coronation",
+        "Spring Bank Holiday",
+      ],
+    ],
+    ["June", [], []],
+    ["July", [], []],
+    ["August", [28], ["Summer Bank Holiday"]],
+    ["September", [], []],
+    ["October", [], []],
+    ["November", [], []],
+    ["December", [25, 26], ["Christmas Day", "Boxing Day"]],
+  ],
+  //Bangalore 2023
+  [
+    ["January", [12, 26], ["Swami Vivekananda Birthday", "Republic Day"]],
+    ["February", [18], ["Maha Shivratri"]],
+    ["March", [22], ["Ugadi"]],
+    [
+      "April",
+      [4, 7, 14, 22, 23],
+      [
+        "Mahaveera Jayanthi",
+        "Good Friday",
+        "Dr. Babasaheb Ambedkar Jayanti",
+        "Khutba-e-Ramzan",
+        "Basava Jayanthi",
+      ],
+    ],
+    ["May", [1], ["Labour Day"]],
+    ["June", [29], ["Id-ul-Adha/Bakrid"]],
+    ["July", [29], ["Last Day of Moharamm"]],
+    ["August", [15], ["Independence Day"]],
+    ["September", [19, 28], ["Varasiddhi Vinayaka Vrata", "Id-E-Milad"]],
+    [
+      "October",
+      [2, 14, 23, 24, 28],
+      [
+        "Gandhi Jayanthi",
+        "Mahalaya Amavasye",
+        "Maha Navami",
+        "Vijaya Dasami",
+        "Maharshi Valmiki Jayanti",
+      ],
+    ],
+    [
+      "November",
+      [1, 12, 30],
+      ["Kannada Rajyothsava", "Diwali", "Kanakadasa Jayanthi"],
+    ],
+    ["December", [25], ["Christmas Day"]],
+  ],
+  //New Delhi 2023
+  [
+    ["January", [12, 26], ["Swami Vivekananda Birthday", "Republic Day"]],
+    ["February", [], []],
+    ["March", [8, 30], ["Holi", "Shri Ram Navami"]],
+    [
+      "April",
+      [4, 7, 14, 22],
+      [
+        "Mahavir Jayanti",
+        "Good Friday",
+        "Dr. Babasaheb Ambedkar Jayanti",
+        "Id-ul-Fitr",
+      ],
+    ],
+    ["May", [5], ["Buddha Purnima"]],
+    ["June", [29], ["Eid-al-Zuha/Bakrid"]],
+    ["July", [29], ["Last Day of Moharamm"]],
+    ["August", [15], ["Independence Day"]],
+    ["September", [7, 28], ["Janmashtami", "Eid-E-Milad"]],
+    ["October", [2, 24], ["Gandhi Jayanthi", "Dussehra"]],
+    ["November", [12, 27], ["Diwali", "Guru Nanak Jayanti"]],
+    ["December", [25], ["Christmas Day"]],
+  ],
+  //New York 2023
+  [
+    [
+      "January",
+      [1, 2, 16],
+      ["New Year's day", "New Year's day", "Martin Luther King, Jr."],
+    ],
+    ["February", [20], ["Washington's Birthday"]],
+    ["March", [], []],
+    ["April", [], []],
+    ["May", [29], ["Memorial Day"]],
+    ["June", [19], ["Juneteenth"]],
+    ["July", [4], ["Independence Day"]],
+    ["August", [], []],
+    ["September", [4], ["Labor Day"]],
+    ["October", [9], ["Columbus Day"]],
+    ["November", [23], ["Thanksgiving Day"]],
+    ["December", [25], ["Christmas Day"]],
+  ],
+];
