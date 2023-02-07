@@ -60,12 +60,13 @@
 
       .Footer {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         margin-bottom: 2%;
         width: 100%;
         justify-content: center;
         color: #7a7a7a;
         align-items: center;
+        text-align: center;
       }
 
       #counter {
@@ -76,7 +77,7 @@
         margin-left: 1%;
       }
 
-      #counter:first-child {
+      #counter:nth-child(2) {
         background-color: rgba(232, 232, 232, 0.822);
         color: black;
       }
@@ -179,7 +180,7 @@
         background-color: rgb(101, 199, 166);
       } */
 
-      .merged:before {
+      /* .merged:before {
         content: "";
         position: absolute;
         top: 5px;
@@ -187,7 +188,7 @@
         left: -5px;
         width: 5px;
         background-color: rgb(101, 199, 166);
-      }
+      } */
 
       /* Style for public holidays */
       .date.holiday {
@@ -324,15 +325,15 @@
     </div>
 
     <div class="Footer">
-      <p>
+      <a class="textButton" target="_blank">Read behind the scenes &#8599;</a>
+      <p style="text-align: center; line-height: 150%">
         This website was created using ChatGPT <br />and some parts of&nbsp;<a
           href="https://twitter.com/imkshitij16"
           class="textButton"
           target="_blank"
           >Kshitij Agrawal</a
-        >'s brain —&nbsp;
+        >'s brain &nbsp;
       </p>
-      <a class="textButton" target="_blank">Read behind the scenes &#8599;</a>
     </div>
 
     <script>
@@ -379,7 +380,7 @@
               <div class="dates">
                 `;
 
-          console.log(firstDay);
+          // console.log(firstDay);
           // Loop through the days in the month
           for (let i = 0; i < firstDay + daysInMonth; i++) {
             //(i - firstDay + 1) is the date counter, not i
@@ -421,7 +422,7 @@
           </div>
         `;
 
-        console.log(document.getElementById(CalContainer[CalOptions]));
+        // console.log(document.getElementById(CalContainer[CalOptions]));
         document.getElementById(CalContainer[CalOptions]).innerHTML = calendar;
 
         // CalContainer[CalOptions].innerHTML = calendar;
@@ -460,9 +461,9 @@
           if (this.classList.contains("selected")) {
             countVac++;
             if (this.classList.contains("weekend")) {
-              console.log(this);
+              // console.log(this);
               this.style.color = "rgb(101, 199, 166);";
-              console.log(this);
+              // console.log(this);
             }
           } else {
             countVac--;
