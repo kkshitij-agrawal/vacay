@@ -1,0 +1,276 @@
+<style>
+@import url("https://fonts.cdnfonts.com/css/product-sans");
+
+body {
+  font-family: "Product Sans", sans-serif;
+  margin: 0px;
+  width: 96%;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+.headerContainer {
+  /* background: linear-gradient(
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0)
+  ); */
+  background-color: rgba(255, 255, 255, 1);
+  position: fixed;
+  z-index: 12;
+  display: flex;
+  flex-direction: row;
+  /* margin-left: 5%;
+  margin-right: 5%; */
+  top: 0%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  width: 100%;
+  justify-content: center;
+}
+
+.Footer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2%;
+  width: 100%;
+  justify-content: center;
+  color: #7a7a7a;
+  align-items: center;
+  text-align: center;
+}
+
+#counter {
+  background-color: rgba(74, 185, 148, 0.822);
+  padding: 1%;
+  color: white;
+  border-radius: 5px;
+  margin-left: 1%;
+}
+
+#counter:nth-child(2) {
+  background-color: rgba(232, 232, 232, 0.822);
+  color: black;
+}
+
+.calendar {
+  padding: 5%;
+  padding-top: 7%;
+  /* margin-top: 1%; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+.month {
+  /* display: flex; */
+  /* flex-direction: column; */
+  grid-template-rows: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.month-name {
+  background-color: #3498db;
+  color: #fff;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 10px 0;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  text-align: center;
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.weekday {
+  /* background-color: #e6e6e6; */
+}
+
+.dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+}
+
+.date {
+  background-color: #fff;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+}
+
+.date.selected {
+  background-color: rgb(101, 199, 166);
+  color: #fff;
+  z-index: 5;
+  font-weight: bolder;
+}
+
+/* Style for merged dates */
+.date.selected + .date.selected {
+  /* border: rgb(74, 185, 148) solid 4px; */
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  /* margin-left: -5px; */
+}
+
+.date.selected:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.date.selected:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.date.selected:first-child:before {
+  left: 0px;
+  width: 0px;
+}
+
+/* .date.selected:before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: -5px;
+  width: 5px;
+  background-color: rgb(101, 199, 166);
+} */
+
+/* .merged:before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: -5px;
+  width: 5px;
+  background-color: rgb(101, 199, 166);
+} */
+
+/* Style for public holidays */
+.date.holiday {
+  background-color: #ff6c5c;
+  color: #fff;
+}
+
+.date.empty {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.date.weekend {
+  background-color: hsl(57, 100%, 92%);
+
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 999;
+  display: none;
+  font-size: 0.7em;
+  padding: 10px;
+  background-color: #ff6c5c;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.textButton {
+  background-color: rgba(232, 232, 232, 0.822);
+  color: rgb(53, 53, 53);
+  padding: 0.5%;
+
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.textButton:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+#calendar-select {
+  border-radius: 5px;
+  /* padding-left: 1%; */
+  /* padding-right: 1%; */
+  /* border: none; */
+  cursor: pointer;
+  /* background-color: #f0f0f0; */
+  
+    border: 1px solid #ccc;
+}
+
+     
+  
+  .selectBox {
+    position: relative;
+  }
+  
+  .selectBox select {
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+  .checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+  }
+  
+  .checkboxes label {
+    display: block;
+  }
+  
+  .checkboxes label:hover {
+    background-color: #1e90ff;
+  }
+
+#requestOption_btn {
+  border-top: 1px dotted #000;
+}
+
+@media (max-width: 608px) {
+  .headerContainer {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    width: 96%;
+  }
+
+  .Footer {
+    width: 96%;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #counter {
+    padding: 2%;
+  }
+
+  .calendar {
+    grid-template-columns: repeat(1, 1fr);
+    padding-top: 15%;
+  }
+}
+</style>
