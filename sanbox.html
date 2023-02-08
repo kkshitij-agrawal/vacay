@@ -1,359 +1,105 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>Plan your vacation 2023</title>
-    <link href="https://fonts.cdnfonts.com/css/product-sans" rel="stylesheet" />
-
+    <meta charset="UTF-8" />
+    <title>Experiment Co.</title>
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
     <style>
-      @import url("https://fonts.cdnfonts.com/css/product-sans");
-
-      .body {
-        font-family: "Product Sans", sans-serif;
-      }
-      .headerContainer {
-        /* background: linear-gradient(
-          rgba(255, 255, 255, 1),
-          rgba(255, 255, 255, 0)
-        ); */
-        background-color: rgba(255, 255, 255, 1);
-        position: fixed;
-        z-index: 12;
-        display: flex;
-        flex-direction: row;
-        /* margin-left: 5%;
-        margin-right: 5%; */
-        top: 0%;
-        padding-top: 1%;
-        padding-bottom: 1%;
-        width: 100%;
-        justify-content: center;
+      body {
+        background-image: url(https://www.openpeeps.com/img/peeps/home/peeps-home-bg.png);
+        background-size: cover;
+        font-family: "Open Sans", sans-serif;
+        color: #333;
+        margin: 0;
       }
 
-      .Footer {
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 2%;
-        width: 100%;
-        justify-content: center;
-      }
-
-      #counter {
-        background-color: rgba(74, 185, 148, 0.822);
-        padding: 1%;
-        color: white;
-        border-radius: 5px;
-        margin-left: 1%;
-      }
-
-      #counter:first-child {
-        background-color: rgba(232, 232, 232, 0.822);
-        color: black;
-      }
-
-      .calendar {
-        padding: 5%;
-        padding-top: 7%;
-        /* margin-top: 1%; */
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 20px;
-      }
-
-      .month {
-        /* display: flex; */
-        /* flex-direction: column; */
-        grid-template-rows: repeat(7, 1fr);
-        grid-template-columns: repeat(7, 1fr);
-        grid-gap: 5px;
-        background-color: #3ec3e1;
-        border-radius: 10px;
-        padding: 10px;
-      }
-
-      .month-name {
-        background-color: #3498db;
-        color: #fff;
+      header {
         text-align: center;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        padding: 10px 0;
+        padding: 50px 0;
       }
 
-      .weekdays {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        grid-gap: 5px;
-        text-align: center;
-        padding: 10px 0;
-        font-weight: bold;
+      .handwritten-text {
+        font-style: italic;
+        font-size: 36px;
+        text-shadow: 1px 1px #fff;
+        animation: text-focus-in 1s ease-out;
       }
 
-      .weekday {
-        /* background-color: #e6e6e6; */
-      }
-
-      .dates {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        grid-gap: 5px;
-      }
-
-      .date {
-        background-color: rgba(255, 255, 255, 0.5);
-        color: white;
-        border-radius: 5px;
-        text-align: center;
-        padding: 10px;
-        cursor: pointer;
-        position: relative;
-        z-index: 10;
-      }
-
-      .date.selected {
-        background-color: rgb(101, 199, 166);
-        color: #fff;
-        z-index: 5;
-        font-weight: bolder;
-      }
-
-      /* Style for merged dates */
-      .date.selected + .date.selected {
-        /* border: rgb(74, 185, 148) solid 4px; */
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-        /* margin-left: -5px; */
-      }
-
-      .date.selected:last-child {
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-      }
-
-      .date.selected:first-child {
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-
-      .date.selected:first-child:before {
-        left: 0px;
-        width: 0px;
-      }
-
-      .date.selected:before {
-        content: "";
-        position: absolute;
-        top: 5px;
-        bottom: 5px;
-        left: -5px;
-        width: 5px;
-        background-color: rgb(101, 199, 166);
-      }
-
-      /* Style for public holidays */
-      .date.holiday {
-        background-color: #ff6c5c;
-        color: #fff;
-      }
-
-      .date.empty {
-        opacity: 0.5;
-      }
-
-      .date.weekend {
-        background-color: hsl(57, 100%, 92%);
-        z-index: 1;
-        box-sizing: border-box;
-      }
-
-      .tooltip {
-        position: absolute;
-        z-index: 999;
-        display: none;
-        font-size: 0.7em;
-        padding: 10px;
-        background-color: #ff6c5c;
-        color: #fff;
-        border-radius: 5px;
-      }
-
-      @media (max-width: 608px) {
-        .headerContainer {
-          padding-top: 2%;
-          padding-bottom: 2%;
-          width: 96%;
+      @keyframes text-focus-in {
+        0% {
+          transform: scale(0.5);
+          opacity: 0;
         }
-
-        #counter {
-          padding: 2%;
+        100% {
+          transform: scale(1);
+          opacity: 1;
         }
+      }
 
-        .calendar {
-          grid-template-columns: repeat(1, 1fr);
-          padding-top: 15%;
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 0;
+      }
+
+      .description {
+        font-size: 18px;
+        text-align: center;
+        max-width: 500px;
+        animation: text-slide-in 1s ease-out;
+      }
+
+      @keyframes text-slide-in {
+        0% {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #fff;
+        color: #333;
+        border: 2px solid #333;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 20px;
+        box-shadow: 0px 3px 0px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        animation: button-slide-in 1s ease-out;
+      }
+
+      @keyframes button-slide-in {
+        0% {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
         }
       }
     </style>
   </head>
   <body>
-    <!-- 
-    Features
-    - Add bank holiday tooltip
-    - Add note of the location
-    - Add live weather updates of that location in that period
-    - Ability to share with friends and edit (like google doc)
-    -->
-
-    <div class="headerContainer">
-      <!-- Calendar 2023 London -->
-      <span id="counter"> 💼 OOO Days: <span id="countOOO">0</span></span>
-      <span id="counter">🏖️ Vacation Days: <span id="countVac">0</span></span>
+    <header>
+      <h1 class="handwritten-text">Digital Pioneers</h1>
+    </header>
+    <div class="container">
+      <p class="description">
+        Our company experiments and creates multiple innovational, fun, digital
+        tools for communities and writes about the behind the scenes in blogs.
+      </p>
+      <a href="#" class="cta-button">Explore Tools</a>
     </div>
-
-    <div class="tooltip"></div>
-
-    <div class="calendar">
-      <!-- January -->
-      <div class="month">
-        <div class="month-name">Kshitij</div>
-        <div class="weekdays">
-          <div class="weekday">01/02</div>
-        </div>
-        <div class="dates">
-          <div class="date weekend">1</div>
-          <div
-            class="date holiday"
-            onmouseenter="showTooltip(this)"
-            onmouseleave="hideTooltip()"
-            data-text="New year's day"
-          >
-            2
-          </div>
-          <div class="date">3</div>
-          <div class="date">4</div>
-          <div class="date">5</div>
-          <div class="date">6</div>
-          <div class="date weekend">7</div>
-          <div class="date weekend">8</div>
-          <div class="date">9</div>
-          <div class="date">10</div>
-          <div class="date">11</div>
-          <div class="date">12</div>
-          <div class="date">13</div>
-          <div class="date weekend">14</div>
-          <div class="date weekend">15</div>
-          <div class="date">16</div>
-          <div class="date">17</div>
-          <div class="date">18</div>
-          <div class="date">19</div>
-          <div class="date">20</div>
-          <div class="date weekend">21</div>
-          <div class="date weekend">22</div>
-          <div class="date">23</div>
-          <div class="date">24</div>
-          <div class="date">25</div>
-          <div class="date">26</div>
-          <div class="date">27</div>
-          <div class="date weekend">28</div>
-          <div class="date weekend">29</div>
-          <div class="date">30</div>
-          <div class="date">31</div>
-        </div>
-      </div>
-    </div>
-    <div class="Footer">
-      This website was created using AI and some parts of &nbsp;<a
-        href="https://twitter.com/imkshitij16"
-        >Kshitij Agrawal</a
-      >'s brain
-    </div>
-    <script>
-      const dates = document.querySelectorAll(".date");
-      let countOOO = 0;
-      let countVac = 0;
-
-      dates.forEach((date) => {
-        date.addEventListener("click", function () {
-          this.classList.toggle("selected");
-
-          // check if there are selected neighboring dates and merge them
-          const row = this.parentNode.children;
-          let merged = false;
-
-          // change OOO counter
-          if (
-            this.classList.contains("selected") &&
-            !this.classList.contains("holiday") &&
-            !this.classList.contains("weekend")
-          ) {
-            countOOO++;
-          } else if (
-            !this.classList.contains("selected") &&
-            !this.classList.contains("holiday") &&
-            !this.classList.contains("weekend")
-          ) {
-            countOOO--;
-          }
-
-          // change Vac counter
-          if (this.classList.contains("selected")) {
-            countVac++;
-          } else {
-            countVac--;
-          }
-          document.querySelector("#countOOO").textContent = countOOO;
-          document.querySelector("#countVac").textContent = countVac;
-
-          // change color of weekend day if selected
-          if (
-            this.classList.contains("selected") &&
-            this.classList.contains("weekend")
-          ) {
-            this.style.boxShadow = "inset 0px 0px 0px 5px rgb(101, 199, 166)";
-            this.style.color = "black ";
-          } else if (
-            !this.classList.contains("selected") &&
-            this.classList.contains("weekend")
-          ) {
-            this.style.boxShadow = "none";
-          }
-
-          // change color of weekend day if selected
-          if (
-            this.classList.contains("selected") &&
-            this.classList.contains("holiday")
-          ) {
-            this.style.boxShadow = "inset 0px 0px 0px 5px rgb(101, 199, 166)";
-          } else if (
-            !this.classList.contains("selected") &&
-            this.classList.contains("holiday")
-          ) {
-            this.style.boxShadow = "none";
-          }
-
-          for (let i = 0; i < row.length; i++) {
-            if (row[i] === this) {
-              if (row[i - 1] && row[i - 1].classList.contains("selected")) {
-                this.classList.add("merged");
-                merged = true;
-                break;
-              } else if (
-                row[i + 1] &&
-                row[i + 1].classList.contains("selected")
-              ) {
-                row[i + 1].classList.add("merged");
-                merged = true;
-                break;
-              }
-            }
-          }
-
-          if (!merged) {
-            this.classList.remove("merged");
-          }
-        });
-      });
-    </script>
+    <footer>
+      <p class="copyright">Copyright &copy; 2022 Digital Pioneers</p>
+    </footer>
   </body>
 </html>

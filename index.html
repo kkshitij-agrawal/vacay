@@ -198,6 +198,7 @@
 
       .date.empty {
         opacity: 0.5;
+        cursor: default;
       }
 
       .date.weekend {
@@ -347,8 +348,8 @@
 
       for (let CalOptions = 0; CalOptions < CalContainer.length; CalOptions++) {
         var calendar = `
-          <div class="calendar">
-            `;
+                <div class="calendar">
+                  `;
         // Loop through all months of the year
         for (let month = 0; month < months[CalOptions].length; month++) {
           // Create a new Date object for the current month
@@ -365,20 +366,20 @@
 
           // Generate the month calendar
           calendar += `
-          
-            <div class="month">
-              <div class="month-name">${months[CalOptions][month][0]}</div>
-              <div class="weekdays">
-                <div class="weekday">Sun</div>
-                <div class="weekday">Mon</div>
-                <div class="weekday">Tue</div>
-                <div class="weekday">Wed</div>
-                <div class="weekday">Thu</div>
-                <div class="weekday">Fri</div>
-                <div class="weekday">Sat</div>
-              </div>
-              <div class="dates">
-                `;
+
+                  <div class="month">
+                    <div class="month-name">${months[CalOptions][month][0]}</div>
+                    <div class="weekdays">
+                      <div class="weekday">Sun</div>
+                      <div class="weekday">Mon</div>
+                      <div class="weekday">Tue</div>
+                      <div class="weekday">Wed</div>
+                      <div class="weekday">Thu</div>
+                      <div class="weekday">Fri</div>
+                      <div class="weekday">Sat</div>
+                    </div>
+                    <div class="dates">
+                      `;
 
           // console.log(firstDay);
           // Loop through the days in the month
@@ -392,16 +393,17 @@
               }
               if (months[CalOptions][month][1].includes(i - firstDay + 1)) {
                 calendar += `<div class="date holiday" onmouseenter="showTooltip(this)"
-        onmouseleave="hideTooltip()"
-        data-text="${
-          months[CalOptions][month][2][
-            months[CalOptions][month][1].indexOf(i - firstDay + 1)
-          ]
-        }">${i - firstDay + 1}</div>`;
+              onmouseleave="hideTooltip()"
+              data-date="${i - firstDay + 1}-${months[CalOptions][month][0]}"
+              data-text="${
+                months[CalOptions][month][2][
+                  months[CalOptions][month][1].indexOf(i - firstDay + 1)
+                ]
+              }">${i - firstDay + 1}</div>`;
               } else {
-                calendar += `<div class="date ${weekendFlag}">${
+                calendar += `<div class="date ${weekendFlag}" data-date="${
                   i - firstDay + 1
-                }</div>`;
+                }-${months[CalOptions][month][0]}">${i - firstDay + 1}</div>`;
               }
 
               currentDay = (currentDay + 1) % 7;
@@ -411,16 +413,16 @@
 
           // Close the .dates div and .calendar div
           calendar += `
-              </div>
-            </div>
-          `;
+                    </div>
+                  </div>
+                `;
 
           // Add the generated calendar to the page
         }
 
         calendar += `
-          </div>
-        `;
+                </div>
+              `;
 
         // console.log(document.getElementById(CalContainer[CalOptions]));
         document.getElementById(CalContainer[CalOptions]).innerHTML = calendar;
@@ -430,11 +432,57 @@
 
       //===============================================================================
 
-      const dates = document.querySelectorAll(".date");
+      const dates = [...document.querySelectorAll(".date")].filter(
+        (date) => !date.classList.contains("empty")
+      );
+
       let countOOO = 0;
       let countVac = 0;
 
+      let selectedDates = {};
+      // Retrieve selected dates from local storage
+      const storedDates = localStorage.getItem("selectedDates");
+      console.log(storedDates);
+
+      if (storedDates) {
+        selectedDates = JSON.parse(storedDates);
+        Object.entries(selectedDates).forEach(([date, selected]) => {
+          console.log(`[data-date="${date}"]`);
+          const dateElement = document.querySelector(`[data-date="${date}"]`);
+          console.log(dateElement);
+          if (selected) {
+            dateElement.classList.add("selected");
+            if (dateElement.classList.contains("holiday")) {
+              dateElement.style.boxShadow =
+                "inset 0px 0px 0px 5px rgb(101, 199, 166)";
+            }
+            if (dateElement.classList.contains("weekend")) {
+              dateElement.style.boxShadow =
+                "inset 0px 0px 0px 5px rgb(101, 199, 166)";
+              dateElement.style.color = "black ";
+            }
+            // update counters as well
+            if (
+              !dateElement.classList.contains("holiday") &&
+              !dateElement.classList.contains("weekend")
+            ) {
+              countOOO++;
+            }
+            countVac++;
+          }
+        });
+      }
+
+      // Update counters
+      document.querySelector("#countOOO").textContent = countOOO;
+      document.querySelector("#countVac").textContent = countVac;
+
       dates.forEach((date) => {
+        // if (selectedDates[date.dataset.date]) {
+        //   date.classList.add("selected");
+        //   date.setAttribute("data-date", selectedDates[date.dataset.date]);
+        // }
+
         date.addEventListener("click", function () {
           this.classList.toggle("selected");
 
@@ -465,6 +513,14 @@
               this.style.color = "rgb(101, 199, 166);";
               // console.log(this);
             }
+            const monthName =
+              this.parentNode.parentNode.querySelector(
+                ".month-name"
+              ).textContent;
+
+            //saving to local storage
+            this.setAttribute("data-date", `${this.textContent}-${monthName}`);
+            selectedDates[this.dataset.date] = true;
           } else {
             countVac--;
             if (this.classList.contains("weekend")) {
@@ -472,9 +528,16 @@
             } else if (this.classList.contains("holiday")) {
               document.querySelector(".tooltip").style.display = "none";
             }
+
+            //removing from local storage
+            delete selectedDates[this.dataset.date];
+            this.removeAttribute("data-date");
           }
           document.querySelector("#countOOO").textContent = countOOO;
           document.querySelector("#countVac").textContent = countVac;
+
+          console.log("datesSaved", selectedDates);
+          localStorage.setItem("selectedDates", JSON.stringify(selectedDates));
 
           // change color of weekend day if selected
           if (
@@ -490,7 +553,7 @@
             this.style.boxShadow = "none";
           }
 
-          // change color of weekend day if selected
+          // change color of holiday if selected
           if (
             this.classList.contains("selected") &&
             this.classList.contains("holiday")
