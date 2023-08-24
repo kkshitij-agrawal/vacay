@@ -1,380 +1,54 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="styles.css" />
 
-    <title>Plan your vacation 2023</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v2 Plan your vacation 2023</title>
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>"
     />
-
-    <link href="https://fonts.cdnfonts.com/css/product-sans" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="CalendarList.js"></script>
-    <script src="https://static.airtable.com/js/embed/embed_snippet_v1.js"></script>
-    <script>
-      // $(document).ready(function () {
-      //   $("#calendar2").load("IndiaCal.html");
-      //   alert("done");
-      // });
-
-      $(document).ready(function () {
-        $("#calendar-select").change(function () {
-          var selectedCalendar = $(this).val();
-          $(".calContainer").hide();
-          $("#" + selectedCalendar).show();
-        });
-      });
-    </script>
-  </head>
-
-  <body>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
     <div class="headerContainer">
-      <select id="calendar-select">
-        <option value="calendarLondon">🇬🇧 London'23</option>
-        <option value="calendarBangalore">🇮🇳 Bangalore'23</option>
-        <option value="calendarDelhi">🇮🇳 New Delhi'23</option>
-        <option value="calendarNewYork">🇺🇸 New York'23</option>
-        <option value="requestOption" id="requestOption_btn">
-          👋 Request...
-        </option>
-      </select>
-      <span id="counter">💼 OOOs: <span id="countOOO">0</span></span>
-      <span id="counter">🏖️ Vacations: <span id="countVac">0</span></span>
+        <!-- <div class="tagline">  Step 1 of planning vacations - When do you take the holidays? </div> -->
+        <!-- <div class="tagline">  Forget counting 'Out Of Office' days in your head! </div> -->
+        <select id="citySelector" class="city-selector"></select> <!-- Dropdown for city selection -->
+        <div class="counter">
+            💼 Total OOOs: <span id="counter">0</span>
+        </div>
     </div>
 
-    <div class="tooltip"></div>
-
-    <!-- <div id="calendar2"></div> -->
-    <div id="calendar-container">
-      <!-- London 2023 -->
-      <div class="calContainer" id="calendarLondon"></div>
-      <!-- Bangalore 2023 -->
-      <div
-        class="calContainer"
-        id="calendarBangalore"
-        style="display: none"
-      ></div>
-
-      <!-- New Delhi 2023 -->
-      <div class="calContainer" id="calendarDelhi" style="display: none"></div>
-      <!-- New York 2023 -->
-      <div
-        class="calContainer"
-        id="calendarNewYork"
-        style="display: none"
-      ></div>
-      <!-- Request option -->
-      <div
-        id="requestOption"
-        class="calContainer"
-        style="display: none; margin-top: 10%; width: 100%"
-      >
-        <iframe
-          class="airtable-embed airtable-dynamic-height"
-          src="https://airtable.com/embed/shr42qAJ8OKiO1cHf?backgroundColor=cyan"
-          frameborder="0"
-          onmousewheel=""
-          width="100%"
-          height="936.2"
-          style="background: transparent"
-        ></iframe>
-      </div>
+    <div class="year-panel">
+        <button class="collapsible" onclick="togglePanel(this)">2023 <span class="chevron">▼</span> <b style="color: rgba(74, 185, 148, 0.822);">  (Forget counting 'Out Of Office' days in your head!)</b></button>
+        <div class="year-content" style="display: block;">
+            <div class="calendar" id="calendar2023"></div>
+        </div>
+        
     </div>
-
-    <div class="Footer">
-      <p>
-        Plan your vacations for 2023! Click on the dates to mark them and forget
-        counting in your head (changes are saved in your local device
-        automatically)<br />
-      </p>
-
-      <a class="textButton" target="_blank" href="https://aiverse.design/playground/vacayplan"
-        >Read behind the scenes &#8599;</a
-      >
-      <p style="text-align: center; line-height: 150%">
-        This website was created using ChatGPT <br />and some parts of&nbsp;<a
-          href="https://twitter.com/intent/user?screen_name=imkshitij16"
-          class="textButton"
-          target="_blank"
-          >Kshitij Agrawal</a
-        >'s brain &nbsp;
-      </p>
+    
+    <div class="year-panel">
+        <button class="collapsible" onclick="togglePanel(this)">2024 <span class="chevron">▶</span></button>
+        <div class="year-content">
+            <div class="calendar" id="calendar2024"></div>
+        </div>
     </div>
-
-    <script>
-      const CalContainer = [
-        "calendarLondon",
-        "calendarBangalore",
-        "calendarDelhi",
-        "calendarNewYork",
-      ];
-      // const CalContainer = document.getElementsByClassName("calendarContainer");
-
-      for (let CalOptions = 0; CalOptions < CalContainer.length; CalOptions++) {
-        var calendar = `
-                <div class="calendar">
-                  `;
-        // Loop through all months of the year
-        for (let month = 0; month < months[CalOptions].length; month++) {
-          // Create a new Date object for the current month
-          const date = new Date(2023, month, 1);
-
-          // Get the first day of the month
-          const firstDay = date.getDay();
-          //to calc weekends
-          let currentDay = firstDay;
-
-          // Get the number of days in the month
-          const daysInMonth = new Date(2023, month + 1, 0).getDate();
-          var weekendFlag = "";
-
-          // Generate the month calendar
-          calendar += `
-
-                  <div class="month">
-                    <div class="month-name">${months[CalOptions][month][0]}</div>
-                    <div class="weekdays">
-                      <div class="weekday">Sun</div>
-                      <div class="weekday">Mon</div>
-                      <div class="weekday">Tue</div>
-                      <div class="weekday">Wed</div>
-                      <div class="weekday">Thu</div>
-                      <div class="weekday">Fri</div>
-                      <div class="weekday">Sat</div>
-                    </div>
-                    <div class="dates">
-                      `;
-
-          // console.log(firstDay);
-          // Loop through the days in the month
-          for (let i = 0; i < firstDay + daysInMonth; i++) {
-            //(i - firstDay + 1) is the date counter, not i
-            if (i < firstDay) {
-              calendar += `<div class="date empty"></div>`;
-            } else {
-              if (currentDay == 0 || currentDay == 6) {
-                weekendFlag = "weekend";
-              }
-              if (months[CalOptions][month][1].includes(i - firstDay + 1)) {
-                calendar += `<div class="date holiday" onmouseenter="showTooltip(this)"
-              onmouseleave="hideTooltip()"
-              data-date="${i - firstDay + 1}-${months[CalOptions][month][0]}"
-              data-text="${
-                months[CalOptions][month][2][
-                  months[CalOptions][month][1].indexOf(i - firstDay + 1)
-                ]
-              }">${i - firstDay + 1}</div>`;
-              } else {
-                calendar += `<div class="date ${weekendFlag}" data-date="${
-                  i - firstDay + 1
-                }-${months[CalOptions][month][0]}">${i - firstDay + 1}</div>`;
-              }
-
-              currentDay = (currentDay + 1) % 7;
-              weekendFlag = "";
-            }
-          }
-
-          // Close the .dates div and .calendar div
-          calendar += `
-                    </div>
-                  </div>
-                `;
-
-          // Add the generated calendar to the page
-        }
-
-        calendar += `
-                </div>
-              `;
-
-        // console.log(document.getElementById(CalContainer[CalOptions]));
-        document.getElementById(CalContainer[CalOptions]).innerHTML = calendar;
-
-        // CalContainer[CalOptions].innerHTML = calendar;
-      }
-
-      //===============================================================================
-
-      const dates = [...document.querySelectorAll(".date")].filter(
-        (date) => !date.classList.contains("empty")
-      );
-
-      let countOOO = 0;
-      let countVac = 0;
-
-      let selectedDates = {};
-      // Retrieve selected dates from local storage
-      const storedDates = localStorage.getItem("selectedDates");
-      console.log(storedDates);
-
-      if (storedDates) {
-        selectedDates = JSON.parse(storedDates);
-        Object.entries(selectedDates).forEach(([date, selected]) => {
-          console.log(`[data-date="${date}"]`);
-          const dateElement = document.querySelector(`[data-date="${date}"]`);
-          console.log(dateElement);
-          if (selected) {
-            dateElement.classList.add("selected");
-            if (dateElement.classList.contains("holiday")) {
-              dateElement.style.boxShadow =
-                "inset 0px 0px 0px 5px rgb(101, 199, 166)";
-            }
-            if (dateElement.classList.contains("weekend")) {
-              dateElement.style.boxShadow =
-                "inset 0px 0px 0px 5px rgb(101, 199, 166)";
-              dateElement.style.color = "black ";
-            }
-            // update counters as well
-            if (
-              !dateElement.classList.contains("holiday") &&
-              !dateElement.classList.contains("weekend")
-            ) {
-              countOOO++;
-            }
-            countVac++;
-          }
-        });
-      }
-
-      // Update counters
-      document.querySelector("#countOOO").textContent = countOOO;
-      document.querySelector("#countVac").textContent = countVac;
-
-      dates.forEach((date) => {
-        // if (selectedDates[date.dataset.date]) {
-        //   date.classList.add("selected");
-        //   date.setAttribute("data-date", selectedDates[date.dataset.date]);
-        // }
-
-        date.addEventListener("click", function () {
-          this.classList.toggle("selected");
-
-          // check if there are selected neighboring dates and merge them
-          const row = this.parentNode.children;
-          let merged = false;
-
-          // change OOO counter
-          if (
-            this.classList.contains("selected") &&
-            !this.classList.contains("holiday") &&
-            !this.classList.contains("weekend")
-          ) {
-            countOOO++;
-          } else if (
-            !this.classList.contains("selected") &&
-            !this.classList.contains("holiday") &&
-            !this.classList.contains("weekend")
-          ) {
-            countOOO--;
-          }
-
-          // change Vac counter
-          if (this.classList.contains("selected")) {
-            countVac++;
-            if (this.classList.contains("weekend")) {
-              // console.log(this);
-              this.style.color = "rgb(101, 199, 166);";
-              // console.log(this);
-            }
-            const monthName =
-              this.parentNode.parentNode.querySelector(
-                ".month-name"
-              ).textContent;
-
-            //saving to local storage
-            this.setAttribute("data-date", `${this.textContent}-${monthName}`);
-            selectedDates[this.dataset.date] = true;
-          } else {
-            countVac--;
-            if (this.classList.contains("weekend")) {
-              this.style.color = "black";
-            } else if (this.classList.contains("holiday")) {
-              document.querySelector(".tooltip").style.display = "none";
-            }
-
-            //removing from local storage
-            delete selectedDates[this.dataset.date];
-            this.removeAttribute("data-date");
-          }
-          document.querySelector("#countOOO").textContent = countOOO;
-          document.querySelector("#countVac").textContent = countVac;
-
-          console.log("datesSaved", selectedDates);
-          localStorage.setItem("selectedDates", JSON.stringify(selectedDates));
-
-          // change color of weekend day if selected
-          if (
-            this.classList.contains("selected") &&
-            this.classList.contains("weekend")
-          ) {
-            this.style.boxShadow = "inset 0px 0px 0px 5px rgb(101, 199, 166)";
-            this.style.color = "black ";
-          } else if (
-            !this.classList.contains("selected") &&
-            this.classList.contains("weekend")
-          ) {
-            this.style.boxShadow = "none";
-          }
-
-          // change color of holiday if selected
-          if (
-            this.classList.contains("selected") &&
-            this.classList.contains("holiday")
-          ) {
-            this.style.boxShadow = "inset 0px 0px 0px 5px rgb(101, 199, 166)";
-          } else if (
-            !this.classList.contains("selected") &&
-            this.classList.contains("holiday")
-          ) {
-            this.style.boxShadow = "none";
-          }
-
-          for (let i = 0; i < row.length; i++) {
-            if (row[i] === this) {
-              if (row[i - 1] && row[i - 1].classList.contains("selected")) {
-                this.classList.add("merged");
-                merged = true;
-                break;
-              } else if (
-                row[i + 1] &&
-                row[i + 1].classList.contains("selected")
-              ) {
-                row[i + 1].classList.add("merged");
-                merged = true;
-                break;
-              }
-            }
-          }
-
-          if (!merged) {
-            this.classList.remove("merged");
-          }
-        });
-      });
-
-      function showTooltip(el) {
-        var tooltip = document.querySelector(".tooltip");
-        var holidayText = el.getAttribute("data-text");
-        tooltip.innerHTML = "Bank holiday for " + "<b>" + holidayText + "</b>";
-        tooltip.style.display = "block";
-
-        if (window.innerWidth > 600) {
-          tooltip.style.top = el.offsetTop + el.offsetHeight + 2 + "px";
-          tooltip.style.left = el.offsetLeft + -50 + "px";
-        } else {
-          tooltip.style.top = el.offsetTop + el.offsetHeight + 2 + "px";
-          tooltip.style.left = "20%";
-        }
-      }
-
-      function hideTooltip() {
-        var tooltip = document.querySelector(".tooltip");
-        tooltip.style.display = "none";
-      }
-    </script>
-  </body>
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+<footer>
+    
+    <a class="textButton" target="_blank" href="https://aiverse.design/playground/vacayplan"
+    >How did I make this app? &#8599;</a
+  >
+  <br> Created using ChatGPT 4 and some parts of <a href="https://twitter.com/intent/user?screen_name=imkshitij16"
+    target="_blank" style="text-decoration:underline; color: #7a7a7a;"
+    >Kshitij Agrawal</a>'s brain. 
+  <br><br>
+        <a href="https://aiverse.design/" target="_blank" style="text-decoration:none; color: #7a7a7a;">© 2023 AIverse Experiment </a>
+</footer>
+</body>
 </html>
