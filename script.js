@@ -151,7 +151,7 @@ function populateCalendar(yearData, calendarDivId, CITY_YEAR_KEY, year, selected
             const holiday = monthHolidays.find(h => h[0] === day);
             if (holiday) {
                 dayDiv.classList.add('holiday');
-                dayDiv.setAttribute('title', "Bank Holiday fro " + holiday[1]);  // Set tooltip
+                dayDiv.setAttribute('title', "Bank Holiday for " + holiday[1]);  // Set tooltip
             }
 
             // Set as weekend if Saturday or Sunday
