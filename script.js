@@ -13,8 +13,32 @@ document.addEventListener('DOMContentLoaded', function() {
     populateCityDropdown();
     initializeCounter();
 
+    document.getElementById('clearAll').addEventListener('click', clearAllDates);
+
+
     
 });
+
+function clearAllDates() {
+    // Clear the outOfOfficeCounter and update the displayed counter
+    outOfOfficeCounter = 0;
+    document.getElementById('counter').innerText = outOfOfficeCounter;
+
+    // Clear the selected dates arrays
+    selectedDates2023 = [];
+    selectedDates2024 = [];
+
+    // Clear the localStorage entries for selected dates
+    const cityDropdown = document.getElementById('citySelector');
+    const selectedCity = cityDropdown.value;
+    localStorage.removeItem(selectedCity + "_2023");
+    localStorage.removeItem(selectedCity + "_2024");
+
+    // Refresh the calendar displays to reflect the cleared dates
+    initializeCalendar(selectedCity, "2023");
+    initializeCalendar(selectedCity, "2024");
+}
+
 
 function populateCityDropdown() {
     const cityDropdown = document.getElementById('citySelector');
