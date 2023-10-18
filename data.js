@@ -49,7 +49,7 @@ const months = {
             "August": [[15, "Independence Day"]],
             "September": [[19, "Ganesh Chaturthi"]],
             "October": [[2, "Gandhi Jayanthi"],[24, "Dussehra"]],
-            "November": [[12, "Diwali"], ,[14,"Diwali Balipratipada"],[27, "Gurunanak Jayanti"]],
+            "November": [[12, "Diwali"],[14,"Diwali Balipratipada"],[27, "Gurunanak Jayanti"]],
             "December": [[25, "Christmas Day"]]
         },
         "2024": {

@@ -62,6 +62,8 @@ function populateCityDropdown() {
         // When city is changed, reinitialize the calendar
         initializeCalendar(cityDropdown.value, "2023");
 
+        console.log("selected city being saved -" + cityDropdown.value);
+
         // Save the selected city to localStorage
         localStorage.setItem("selectedCity", cityDropdown.value);
     });
@@ -172,11 +174,13 @@ function populateCalendar(yearData, calendarDivId, CITY_YEAR_KEY, year, selected
 
             // Check if it's a holiday
             const monthHolidays = yearData[monthNames[monthIndex]] || [];
-            const holiday = monthHolidays.find(h => h[0] === day);
+            const holiday = monthHolidays.find(h => h && h[0] === day);
+
             if (holiday) {
                 dayDiv.classList.add('holiday');
                 dayDiv.setAttribute('title', "Bank Holiday for " + holiday[1]);  // Set tooltip
             }
+
 
             // Set as weekend if Saturday or Sunday
             if (date.getDay() === 0 || date.getDay() === 6) {
@@ -199,24 +203,44 @@ function handleDayClick(dayDiv, date, CITY_YEAR_KEY, selectedDatesForYear) {
 
     if (dayDiv.classList.contains('selected')) {
         dayDiv.classList.remove('selected');
-        selectedDatesForYear = selectedDatesForYear.filter(d => d !== dateString); // Modified this line
+        
+        // console.log("[Debug Before Filter] dateString:", dateString);
+        // console.log("[Debug Before Filter] selectedDatesForYear:", selectedDatesForYear);
+        
+        const index = selectedDatesForYear.indexOf(dateString.trim());
+        if (index > -1) {
+            selectedDatesForYear.splice(index, 1);
+        }
+        
+        // console.log("[Debug After Filter] selectedDatesForYear:", selectedDatesForYear);
+        
         if (!dayDiv.classList.contains('holiday') && date.getDay() !== 0 && date.getDay() !== 6) {
             outOfOfficeCounter--;
         }
     } else {
         dayDiv.classList.add('selected');
-        selectedDatesForYear.push(dateString); // Modified this line
+        selectedDatesForYear.push(dateString.trim());
+        
         if (!dayDiv.classList.contains('holiday') && date.getDay() !== 0 && date.getDay() !== 6) {
             outOfOfficeCounter++;
         }
     }
 
+    // Determine which global array to update based on the year
+    if (CITY_YEAR_KEY.endsWith("2023")) {
+        selectedDates2023 = selectedDatesForYear;
+    } else if (CITY_YEAR_KEY.endsWith("2024")) {
+        selectedDates2024 = selectedDatesForYear;
+    }
+
     // Save the updated selected dates to localStorage
-    localStorage.setItem(CITY_YEAR_KEY, JSON.stringify(selectedDatesForYear)); // Modified this line
+    localStorage.setItem(CITY_YEAR_KEY, JSON.stringify(selectedDatesForYear));
+    
     document.getElementById('counter').innerText = outOfOfficeCounter;
 
-    console.log(`[Debug] ${CITY_YEAR_KEY}:`, selectedDatesForYear); // Modified this line
+    // console.log(`[Debug] ${CITY_YEAR_KEY}:`, selectedDatesForYear);
 }
+
 
 
 function updateCounter() {
