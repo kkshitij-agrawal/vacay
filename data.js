@@ -37,6 +37,35 @@ const months = {
             "February": [[14, "Valentines"]]
         }
     },
+     "NSE Holidays": {
+        "2023": {
+            "January": [[26, "Republic day"]],
+            "February" : [[18,"Mahashivratri"]],
+            "March": [[7, "Holi"], [30, "Ram Navami"]],
+            "April": [[4, "Mahavir Jayanthi"], [7, "Good Friday"], [14, "Dr. Babasaheb Ambedkar Jayanti"], [22, "Id-ul-fitr/Ramzan Id"]],
+            "May": [[1, "Maharashtra Day"]],
+            "June": [[29, "Id-ul-Adha/Bakrid"]],
+            "July": [[29, "Last Day of Moharamm"]],
+            "August": [[15, "Independence Day"]],
+            "September": [[19, "Ganesh Chaturthi"]],
+            "October": [[2, "Gandhi Jayanthi"],[24, "Dussehra"]],
+            "November": [[12, "Diwali"], ,[14,"Diwali Balipratipada"],[27, "Gurunanak Jayanti"]],
+            "December": [[25, "Christmas Day"]]
+        },
+        "2024": {
+             "January": [[26, "Republic day"]],
+            "March": [[8,"Mahashivratri"], [25, "Holi"], [29, "Good Friday"]],
+            "April": [[21, "Mahavir Jayanthi"], [17, "Ramanavami"], [14, "Dr. Babasaheb Ambedkar Jayanti"], [10, "Id-ul-fitr/Ramzan Id"]],
+            "May": [[1, "Maharashtra Day"]],
+            "June": [[17, "Id-ul-Adha/Bakrid"]],
+            "July": [[17, "Last Day of Moharamm"]],
+            "August": [[15, "Independence Day"]],
+            "September": [[7, "Ganesh Chaturthi"]],
+            "October": [[2, "Gandhi Jayanthi"],[13, "Dussehra"]],
+            "November": [[1, "Diwali"], ,[2,"Diwali"],[15, "Gurunanak Jayanti"]],
+            "December": [[25, "Christmas Day"]]
+        }
+    },
     "New York": {
         "2023": {
             "January": [[1, "New Year's day"], [2, "New Year's day"], [16, "Martin Luther King, Jr."]],
