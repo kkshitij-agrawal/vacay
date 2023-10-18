@@ -134,7 +134,7 @@ function populateCalendar(yearData, calendarDivId, CITY_YEAR_KEY, year, selected
         }
 
         for (let day = 1; day <= daysInMonth; day++) {
-            const date = new Date(2023, monthIndex, day);
+            const date = new Date(year, monthIndex, day);
             const dateString = date.toISOString().split('T')[0];
             const dayDiv = document.createElement('div');
             dayDiv.className = 'day';
