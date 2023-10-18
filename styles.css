@@ -20,6 +20,10 @@ body {
 
 }
 
+#calendar2024 .month-name{
+    background-color: #444;
+}
+
 .headerContainer {
     background-color: rgba(255, 255, 255, 1);
     position: fixed;
@@ -53,6 +57,10 @@ body {
         padding-top: 1%;
         padding-bottom: 1%;
     }   
+
+    .city-selector {
+        font-size: 14px;
+    }
 }
 
 .month {
@@ -210,8 +218,8 @@ footer {
 }
 
 .collapsible {
-    background-color: #1a1a1a;
-    color: #fff;
+    background-color: #f1f1f1;
+    color: #444;
     cursor: pointer;
     padding: 10px;
     width: 86%;
@@ -224,7 +232,7 @@ footer {
 }
 
 .collapsible:hover {
-    background-color: rgb(96, 96, 96);
+    background-color: rgb(201, 201, 201);
 }
 
 .year-content {
