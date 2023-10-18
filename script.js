@@ -123,7 +123,7 @@ function populateCalendar(yearData, calendarDivId, CITY_YEAR_KEY, year, selected
         });
 
         // Get the number of days in the month
-        const daysInMonth = new Date(2023, monthIndex + 1, 0).getDate();
+        const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
         const startDay = new Date(year, monthIndex, 1).getDay();
 
         // Add preceding empty days
